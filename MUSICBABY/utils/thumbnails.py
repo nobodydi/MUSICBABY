@@ -6,7 +6,7 @@ import aiofiles
 import aiohttp
 
 from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageFont, ImageOps
-from youtubesearchpython.future import VideosSearch
+from youtubesearchpython.__future__ import VideosSearch
 
 from MUSICBABY import app
 from config import YOUTUBE_IMG_URL, BOT_NAME

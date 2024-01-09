@@ -104,9 +104,7 @@ async def get_thumb(videoid):
         draw.text(
             (6, 6), f"{BOT_NAME}", fill="Yellow", font=name_font
         )
-
-⏤͟͟͞͞♥︎'᭄͢ '͢🇦𝗜𝗠⋆‌⃝ ❤️⃝🕊️⃝⍣⃪͜🇩𝐈𝐋』⃝⛓️❤️⋆‌⋆‌⃝⏤͟͟͞͞࿐, [09-01-2024 23:09]
-draw.text(
+        draw.text(
             (600, 200),
             f"NOW PLAYING",
             fill="white",

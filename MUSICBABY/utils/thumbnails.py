@@ -11,6 +11,7 @@ from youtubesearchpython.__future__ import VideosSearch
 from MUSICBABY import app
 from config import YOUTUBE_IMG_URL, BOT_NAME
 
+
 def changeImageSize(maxWidth, maxHeight, image):
     widthRatio = maxWidth / image.size[0]
     heightRatio = maxHeight / image.size[1]
@@ -18,6 +19,7 @@ def changeImageSize(maxWidth, maxHeight, image):
     newHeight = int(heightRatio * image.size[1])
     newImage = image.resize((newWidth, newHeight))
     return newImage
+
 
 def clear(text):
     words = text.split(" ")
@@ -27,15 +29,14 @@ def clear(text):
             title += " " + word
     return title.strip()
 
+
 async def get_thumb(videoid):
     if os.path.isfile(f"cache/{videoid}.png"):
         return f"cache/{videoid}.png"
 
     url = f"https://www.youtube.com/watch?v={videoid}"
     try:
-        # Specify language and region parameters
-        results = VideosSearch(url, limit=1, language="en", region="US")
-
+        results = VideosSearch(url, limit=1)
         for result in (await results.next())["result"]:
             try:
                 title = result["title"]
@@ -67,7 +68,7 @@ async def get_thumb(videoid):
         youtube = Image.open(f"cache/thumb{videoid}.png")
         image1 = changeImageSize(1280, 720, youtube)
         image2 = image1.convert("RGBA")
-
+        
         # Check if the 'filter' attribute is available in the Image module
         if hasattr(Image, 'filter'):
             background = image2.filter(filter=ImageFilter.BoxBlur(50))
@@ -78,7 +79,7 @@ async def get_thumb(videoid):
             background = image2.filter(ImageFilter.BoxBlur(50))
             enhancer = ImageEnhance.Brightness(background)
             background = enhancer.enhance(0.9)
-
+        
         Xcenter = youtube.width / 2
         Ycenter = youtube.height / 2
         x1 = Xcenter - 250
@@ -90,7 +91,7 @@ async def get_thumb(videoid):
         logo = ImageOps.expand(logo, border=17, fill="pink")
         background.paste(logo, (50, 100))
         draw = ImageDraw.Draw(background)
-
+        
         # Adjust the font size here
         font_size = 40
         font = ImageFont.truetype("MUSICBABY/assets/font2.ttf", font_size)
@@ -98,8 +99,8 @@ async def get_thumb(videoid):
         font2 = ImageFont.truetype("MUSICBABY/assets/font2.ttf", font2_size)
         arial = ImageFont.truetype("MUSICBABY/assets/font2.ttf", 30)
         name_font = ImageFont.truetype("MUSICBABY/assets/font.ttf", 40)
-
-        para = textwrap.wrap(clear(title), width=32)
+        
+        para = textwrap.wrap(clear(title), width=32) 
         j = 0
         draw.text(
             (6, 6), f"{BOT_NAME}", fill="Yellow", font=name_font

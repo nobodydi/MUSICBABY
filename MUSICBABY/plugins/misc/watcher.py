@@ -2,7 +2,7 @@ from pyrogram import filters
 from pyrogram.types import Message
 
 from MUSICBABY import app
-from MUSICBABY.core.call import MUSICBABY
+from MUSICBABY.core.call import BABY
 
 welcome = 20
 close = 30

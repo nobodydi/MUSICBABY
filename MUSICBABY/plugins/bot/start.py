@@ -28,14 +28,14 @@ from strings import get_string
 
 
 YUMI_PICS = [
-"https://telegra.ph/file/adbc2e5d0c0e1fe2ac189.jpg",
-"https://telegra.ph/file/4a5cf48b1723caee8ebcc.jpg",
-"https://telegra.ph/file/e5350c7ad2dbb4bbe4b1f.jpg",
-"https://telegra.ph/file/2c084f6e22b87d3e0ea75.jpg",
-"https://telegra.ph/file/53562c944a529d5d5af10.jpg",
-"https://telegra.ph/file/d16d55181626b06500f63.jpg",
-"https://telegra.ph/file/8f460ec4803a871c01e16.jpg",
-"https://telegra.ph/file/3e80a5de969d9817f51bb.jpg"
+"https://telegra.ph/file/9624dba2ccfdfbabbf0e7.jpg",
+"https://telegra.ph/file/3c96778c7831473549035.jpg",
+"https://telegra.ph/file/5818d504c807f3e869e94.jpg",
+"https://telegra.ph/file/b4a3eb00f1752c1452548.jpg",
+"https://telegra.ph/file/963438fb770623a1080e0.jpg",
+"https://telegra.ph/file/444c5cb298f069c334e8f.jpg",
+"https://telegra.ph/file/87bd3f87ed40534dd3af7.jpg",
+"https://telegra.ph/file/5f243c486b3e72dbcd022.jpg"
 
 ]
 

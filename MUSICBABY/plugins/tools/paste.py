@@ -12,22 +12,53 @@ import aiohttp
 import asyncio
 from io import BytesIO
 
-def send_welcome(message):
-    BABY.reply_to(message, "Welcome! Send me any code, and I'll paste it to Pastebin for you.")
+def start(update: Update, context: CallbackContext) -> None:
+    update.message.reply_text('Welcome to the PasteBot! Send /paste to save a text snippet.')
 
-@MUSICBABY.message_handler(func=lambda message: True)
-def paste_to_pastebin(message):
-    chat_id = message.chat.id
-    code_to_paste = message.text
+# Define the paste command
+def paste(update: Update, context: CallbackContext) -> None:
+    chat_id = update.message.chat_id
+    text = ' '.join(context.args)
 
-    try:
-        # Create a new paste on Pastebin
-        paste_url = pastebin.create_paste(code_to_paste)
-        BABY.send_message(chat_id, f"Your code has been pasted to Pastebin! Here is the link:\n{paste_url}")
+    if not text:
+        update.message.reply_text('Please provide text to paste. Usage: /paste <your text>')
+        return
 
-    except Exception as e:
-        BABY.send_message(chat_id, f"An error occurred: {str(e)}")
+    pastes[chat_id] = text
+    update.message.reply_text('Your text has been pasted. Use /get to retrieve it.')
 
-# Start the bot
-if __name__ == "__main__":
-    BABY.polling()
+# Define the get command
+def get(update: Update, context: CallbackContext) -> None:
+    chat_id = update.message.chat_id
+
+    if chat_id in pastes:
+        text = pastes[chat_id]
+        update.message.reply_text(f'Your pasted text:\n\n{text}')
+    else:
+        update.message.reply_text('No pasted text found. Use /paste to save a text snippet.')
+
+# Define the echo handler for handling regular messages
+def echo(update: Update, context: CallbackContext) -> None:
+    update.message.reply_text("I don't understand that command. Use /start, /paste, or /get.")
+
+def main() -> None:
+    updater = Updater(TOKEN)
+
+    dp = updater.dispatcher
+
+    # Register command handlers
+    dp.add_handler(CommandHandler("start", start))
+    dp.add_handler(CommandHandler("paste", paste, pass_args=True))
+    dp.add_handler(CommandHandler("get", get))
+    
+    # Register an echo handler for regular messages
+    dp.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
+
+    # Start the Bot
+    updater.start_polling()
+
+    # Run the bot until the user presses Ctrl-C
+    updater.idle()
+
+if __name__ == '__main__':
+    main()

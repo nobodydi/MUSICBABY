@@ -13,9 +13,9 @@ import asyncio
 from io import BytesIO
 
 def send_welcome(message):
-    bot.reply_to(message, "Welcome! Send me any code, and I'll paste it to Pastebin for you.")
+    BABY.reply_to(message, "Welcome! Send me any code, and I'll paste it to Pastebin for you.")
 
-@bot.message_handler(func=lambda message: True)
+@BABY.message_handler(func=lambda message: True)
 def paste_to_pastebin(message):
     chat_id = message.chat.id
     code_to_paste = message.text
@@ -23,11 +23,11 @@ def paste_to_pastebin(message):
     try:
         # Create a new paste on Pastebin
         paste_url = pastebin.create_paste(code_to_paste)
-        bot.send_message(chat_id, f"Your code has been pasted to Pastebin! Here is the link:\n{paste_url}")
+        BABY.send_message(chat_id, f"Your code has been pasted to Pastebin! Here is the link:\n{paste_url}")
 
     except Exception as e:
-        bot.send_message(chat_id, f"An error occurred: {str(e)}")
+        BABY.send_message(chat_id, f"An error occurred: {str(e)}")
 
 # Start the bot
 if __name__ == "__main__":
-    bot.polling()
+    BABY.polling()

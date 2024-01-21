@@ -1,16 +1,14 @@
 from datetime import datetime
+
 from pyrogram import filters
-from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
+from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup, InputMediaVideo
+
 from MUSICBABY import app
-from MUSICBABY.core.call import BABY
+from MUSICBABY.core.call import Dil
 from MUSICBABY.utils import bot_sys_stats
 from MUSICBABY.utils.decorators.language import language
-from MUSICBABY.utils.inline import supp_markup
-from config import BANNED_USERS
-import aiohttp
-import asyncio
-from io import BytesIO
-from PIL import Image, ImageEnhance  # Add these imports
+from config import BANNED_USERS, PING_IMG_URL
+
 
 # Define the repo and close buttons
 repo_button = InlineKeyboardButton("• ʀᴇᴘᴏ •", callback_data="gib_source")

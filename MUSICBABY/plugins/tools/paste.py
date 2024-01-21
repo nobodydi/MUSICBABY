@@ -15,7 +15,7 @@ from io import BytesIO
 def send_welcome(message):
     BABY.reply_to(message, "Welcome! Send me any code, and I'll paste it to Pastebin for you.")
 
-@BABY.message_handler(func=lambda message: True)
+@MUSICBABY.message_handler(func=lambda message: True)
 def paste_to_pastebin(message):
     chat_id = message.chat.id
     code_to_paste = message.text

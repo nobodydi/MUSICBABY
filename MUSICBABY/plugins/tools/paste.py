@@ -12,53 +12,31 @@ import aiohttp
 import asyncio
 from io import BytesIO
 
+# Your Pastebin API key
+PASTEBIN_API_KEY = 'YOUR_PASTEBIN_API_KEY'
+
+# Function to handle the /start command
 def start(update: Update, context: CallbackContext) -> None:
-    update.message.reply_text('Welcome to the PasteBot! Send /paste to save a text snippet.')
+    update.message.reply_text('Hello! Send me a message and I will create a Pastebin link for it.')
 
-# Define the paste command
-def paste(update: Update, context: CallbackContext) -> None:
-    chat_id = update.message.chat_id
-    text = ' '.join(context.args)
+# Function to handle text messages
+def handle_text(update: Update, context: CallbackContext) -> None:
+    text = update.message.text
 
-    if not text:
-        update.message.reply_text('Please provide text to paste. Usage: /paste <your text>')
-        return
+    # Make a request to Pastebin API to create a new paste
+    data = {
+        'api_dev_key': PASTEBIN_API_KEY,
+        'api_paste_data': text,
+        'api_paste_private': '1',  # 1: Private, 0: Public
+        'api_paste_name': 'Telegram Message',
+        'api_paste_expire_date': '1D'  # Paste expiration (1 day in this example)
+    }
 
-    pastes[chat_id] = text
-    update.message.reply_text('Your text has been pasted. Use /get to retrieve it.')
+    response = requests.post('https://pastebin.com/api/api_post.php', data=data)
 
-# Define the get command
-def get(update: Update, context: CallbackContext) -> None:
-    chat_id = update.message.chat_id
-
-    if chat_id in pastes:
-        text = pastes[chat_id]
-        update.message.reply_text(f'Your pasted text:\n\n{text}')
+    if response.ok:
+        paste_url = response.text
+        update.message.reply_text(f'Your Pastebin link: {paste_url}')
     else:
-        update.message.reply_text('No pasted text found. Use /paste to save a text snippet.')
+        update.message.reply_text('Error creating Pastebin link. Please try again.')
 
-# Define the echo handler for handling regular messages
-def echo(update: Update, context: CallbackContext) -> None:
-    update.message.reply_text("I don't understand that command. Use /start, /paste, or /get.")
-
-def main() -> None:
-    updater = Updater(TOKEN)
-
-    dp = updater.dispatcher
-
-    # Register command handlers
-    dp.add_handler(CommandHandler("start", start))
-    dp.add_handler(CommandHandler("paste", paste, pass_args=True))
-    dp.add_handler(CommandHandler("get", get))
-    
-    # Register an echo handler for regular messages
-    dp.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
-
-    # Start the Bot
-    updater.start_polling()
-
-    # Run the bot until the user presses Ctrl-C
-    updater.idle()
-
-if __name__ == '__main__':
-    main()

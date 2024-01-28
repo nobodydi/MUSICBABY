@@ -1,16 +1,5 @@
-from asyncio import get_running_loop, sleep, TimeoutError
-from functools import partial
-from MUSICBABY import app
-from pyrogram import filters
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from aiohttp import ClientSession
-import re
-import os
-import socket
-import aiofiles
-import aiohttp
-import asyncio
-from io import BytesIO
+import os, re, json, aiohttp, requests
+from pyrogram import Client, filters
 
 #Headers
 headers = {

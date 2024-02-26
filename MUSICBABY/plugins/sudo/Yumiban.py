@@ -4,7 +4,7 @@ from MUSICBABY import app, userbot
 from MUSICBABY.misc import SUDOERS
 from pyrogram import * 
 from pyrogram.types import *
-from MUSICBABY.utils.daxx_ban import admin_filter
+from MUSICBABY.utils.BABY_ban import admin_filter
 
 
 

@@ -4,14 +4,14 @@ from MUSICBABY import app, userbot
 from MUSICBABY.misc import SUDOERS
 from pyrogram import * 
 from pyrogram.types import *
-from MUSICBABY.utils.BABY_ban import admin_filter
+from MUSICBABY.utils.daxx_ban import admin_filter
 
 
 
 
 
 
-BABY_text = [
+Yumikoo_text = [
 "hey please don't disturb me.",
 "who are you",    
 "aap kon ho",
@@ -28,12 +28,11 @@ BABY_text = [
 strict_txt = [
 "i can't restrict against my besties",
 "are you serious i am not restrict to my friends",
-"kutte mai apne dosto ko kyu kru",
+"fuck you bsdk k mai apne dosto ko kyu kru",
 "hey stupid admin ", 
-"ha ye phele krlo maar lo ek dusre ki ",  
+"ha ye phele krlo maar lo ek dusre ki gwaand",  
 "i can't hi is my closest friend",
-"i love him please don't restict this user try to usertand ",
-"gaddarii karbe tori amma ki sasu maiya"
+"i love him please don't restict this user try to usertand "
 ]
 
 
@@ -44,6 +43,7 @@ mute = ["mute","silent","shut"]
 unmute = ["unmute","speak","free"]
 kick = ["kick", "out","nikaal","nikal"]
 promote = ["promote","adminship"]
+fullpromote = ["fullpromote","fulladmin"]
 demote = ["demote","lelo"]
 group = ["group"]
 channel = ["channel"]
@@ -53,7 +53,7 @@ channel = ["channel"]
 # ========================================= #
 
 
-@app.on_message(filters.command(["aby","aby"], prefixes=["b", "B"]) & admin_filter)
+@app.on_message(filters.command(["exi","exiko"], prefixes=["n", "N"]) & admin_filter)
 async def restriction_app(app :app, message):
     reply = message.reply_to_message
     chat_id = message.chat.id
@@ -142,3 +142,19 @@ async def restriction_app(app :app, message):
                 await message.reply("demoted !")
 
 
+#async def your_function():
+    for fullpromoted in data:
+        print(f"present {fullpromoted}")            
+        if fullpromoted in fullpromote:
+            await app.promote_chat_member(chat_id, user_id, privileges=ChatPrivileges(
+                can_change_info=True,
+                can_invite_users=True,
+                can_delete_messages=True,
+                can_restrict_members=True,
+                can_pin_messages=True,
+                can_promote_members=True,
+                can_manage_chat=True,
+                can_manage_video_chats=True,
+               )
+             )
+            await message.reply("fullpromoted !")

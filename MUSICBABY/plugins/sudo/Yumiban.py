@@ -11,7 +11,7 @@ from MUSICBABY.utils.BABY_ban import admin_filter
 
 
 
-Yumikoo_text = [
+BABY_text = [
 "hey please don't disturb me.",
 "who are you",    
 "aap kon ho",
@@ -36,14 +36,13 @@ strict_txt = [
 ]
 
 
- 
+
 ban = ["ban","boom"]
 unban = ["unban",]
 mute = ["mute","silent","shut"]
 unmute = ["unmute","speak","free"]
 kick = ["kick", "out","nikaal","nikal"]
 promote = ["promote","adminship"]
-fullpromote = ["fullpromote","fulladmin"]
 demote = ["demote","lelo"]
 group = ["group"]
 channel = ["channel"]
@@ -53,7 +52,7 @@ channel = ["channel"]
 # ========================================= #
 
 
-@app.on_message(filters.command(["exi","exiko"], prefixes=["n", "N"]) & admin_filter)
+@app.on_message(filters.command(["aby","aby"], prefixes=["b", "B"]) & admin_filter)
 async def restriction_app(app :app, message):
     reply = message.reply_to_message
     chat_id = message.chat.id
@@ -61,7 +60,7 @@ async def restriction_app(app :app, message):
         return await message.reply(random.choice(Yumikoo_text))
     bruh = message.text.split(maxsplit=1)[1]
     data = bruh.split(" ")
-    
+
     if reply:
         user_id = reply.from_user.id
         for banned in data:
@@ -72,35 +71,35 @@ async def restriction_app(app :app, message):
                 else:
                     await app.ban_chat_member(chat_id, user_id)
                     await message.reply("OK, Ban kar diya madrchod ko sala Chutiya tha !")
-                    
+
         for unbanned in data:
             print(f"present {unbanned}")
             if unbanned in unban:
                 await app.unban_chat_member(chat_id, user_id)
                 await message.reply(f"Ok, aap bolte hai to unban kar diya") 
-                
+
         for kicked in data:
             print(f"present {kicked}")
             if kicked in kick:
                 if user_id in SUDOERS:
                     await message.reply(random.choice(strict_txt))
-                
+
                 else:
                     await app.ban_chat_member(chat_id, user_id)
                     await app.unban_chat_member(chat_id, user_id)
                     await message.reply("get lost! bhga diya bhosdi wale ko") 
-                    
+
         for muted in data:
             print(f"present {muted}") 
             if muted in mute:
                 if user_id in SUDOERS:
                     await message.reply(random.choice(strict_txt))
-                
+
                 else:
                     permissions = ChatPermissions(can_send_messages=False)
                     await message.chat.restrict_member(user_id, permissions)
                     await message.reply(f"muted successfully! Disgusting people.") 
-                    
+
         for unmuted in data:
             print(f"present {unmuted}")            
             if unmuted in unmute:
@@ -140,21 +139,3 @@ async def restriction_app(app :app, message):
                        )
                      )
                 await message.reply("demoted !")
-
-
-#async def your_function():
-    for fullpromoted in data:
-        print(f"present {fullpromoted}")            
-        if fullpromoted in fullpromote:
-            await app.promote_chat_member(chat_id, user_id, privileges=ChatPrivileges(
-                can_change_info=True,
-                can_invite_users=True,
-                can_delete_messages=True,
-                can_restrict_members=True,
-                can_pin_messages=True,
-                can_promote_members=True,
-                can_manage_chat=True,
-                can_manage_video_chats=True,
-               )
-             )
-            await message.reply("fullpromoted !")

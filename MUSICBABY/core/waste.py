@@ -1,7 +1,6 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message
-from MUSICBABY import app
-import config
+from MUSICBABY import app import config
 from config import OWNER_ID
 
 

@@ -1,7 +1,7 @@
 aiofiles
 bard
-pornhub-api==0.3.0
-aiohttp==3.9.3
+pornhub-api==0.2.0
+aiohttp==3.9.1
 asyncio==3.4.3
 beautifulsoup4
 blackpink
@@ -24,7 +24,7 @@ qrcode
 pytz
 future==1.0.0
 search_engine_parser
-py-tgcalls==1.2.9
+py-tgcalls==0.9.7
 pykeyboard
 pyshorteners
 pyrogram==2.0.106

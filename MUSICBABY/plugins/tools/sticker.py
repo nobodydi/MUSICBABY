@@ -27,7 +27,7 @@ async def upscale_image(client, message):
 
         async with httpx.AsyncClient() as http_client:
             response = await http_client.post(
-                "https://api.stability.ai/v2beta/stable-image/generate/core", data={"image_data": b}, timeout=None
+                "TnSVyk-m9Yjkp-QIVoRLc5Uout1ML2UAWOpMaI5sxXs8T5Lh", data={"image_data": b}, timeout=None
             )
 
         with open("upscaled_image.png", "wb") as output_file:

@@ -4,10 +4,8 @@ import random
 import textwrap
 import aiofiles
 import aiohttp
-
 from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageFont, ImageOps
 from youtubesearchpython.__future__ import VideosSearch
-
 from MUSICBABY import app
 from config import YOUTUBE_IMG_URL, BOT_NAME
 
@@ -36,6 +34,9 @@ async def get_thumb(videoid):
 
     url = f"https://www.youtube.com/watch?v={videoid}"
     try:
+        # Specify language and region parameters
+        results = VideosSearch(url, limit=1, language="en", region="US")
+
         results = VideosSearch(url, limit=1)
         for result in (await results.next())["result"]:
             try:
@@ -57,17 +58,16 @@ async def get_thumb(videoid):
                 channel = result["channel"]["name"]
             except:
                 channel = "Unknown Channel"
-
         async with aiohttp.ClientSession() as session:
             async with session.get(thumbnail) as resp:
                 if resp.status == 200:
                     f = await aiofiles.open(f"cache/thumb{videoid}.png", mode="wb")
                     await f.write(await resp.read())
                     await f.close()
-
         youtube = Image.open(f"cache/thumb{videoid}.png")
         image1 = changeImageSize(1280, 720, youtube)
         image2 = image1.convert("RGBA")
+
         
         # Check if the 'filter' attribute is available in the Image module
         if hasattr(Image, 'filter'):
@@ -79,6 +79,7 @@ async def get_thumb(videoid):
             background = image2.filter(ImageFilter.BoxBlur(50))
             enhancer = ImageEnhance.Brightness(background)
             background = enhancer.enhance(0.9)
+
         
         Xcenter = youtube.width / 2
         Ycenter = youtube.height / 2
@@ -91,6 +92,7 @@ async def get_thumb(videoid):
         logo = ImageOps.expand(logo, border=17, fill="pink")
         background.paste(logo, (50, 100))
         draw = ImageDraw.Draw(background)
+
         
         # Adjust the font size here
         font_size = 40
@@ -99,6 +101,8 @@ async def get_thumb(videoid):
         font2 = ImageFont.truetype("MUSICBABY/assets/font2.ttf", font2_size)
         arial = ImageFont.truetype("MUSICBABY/assets/font2.ttf", 30)
         name_font = ImageFont.truetype("MUSICBABY/assets/font.ttf", 40)
+
+        para = textwrap.wrap(clear(title), width=32)
         
         para = textwrap.wrap(clear(title), width=32) 
         j = 0
@@ -134,7 +138,6 @@ async def get_thumb(videoid):
                     stroke_fill="white",
                     font=font,
                 )
-
         draw.text(
             (600, 450),
             f"Views : {views[:23]}",

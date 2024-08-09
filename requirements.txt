@@ -37,7 +37,7 @@ spotipy
 tgcrypto
 telegraph
 unidecode
-yt-dlp==2024.8.6
+git+https://github.com/Badmunda98/yt-dp-fork
 youtube-search
 youtube-search-python
 gtts
